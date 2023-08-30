@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+        body{ margin: 0; padding: 0; box-sizing: border-box;}
+        /*.container{ width: 80%; margin: auto; padding-top: 20px; }*/
+        .logo{ text-align: center; margin-top: 20px;}
+
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button-green {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+        .button-green:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button-blue {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+        }
+
+        .button-blue:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+    </style>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@700&display=swap');
+</style>
+<link rel="stylesheet" href="css/croppie.css" />
+<body>
+<div class="logo" style="margin-bottom: 10px">
+<!--    <img src="img/logo.jpg" width="400" height="120">-->
+</div>
+
+<div id="divLoading" style="display:none;margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(102, 102, 102); z-index: 30001; opacity: 0.8;">
+    <p style="position: absolute; color: White; top: 50%; left: 45%;">
+        Loading, please wait...
+        <img src="img/progress.gif">
+    </p>
+</div>
+<div id="reloadpage" style="display:none;margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(102, 102, 102); z-index: 30001; opacity: 0.8;">
+    <p style="position: absolute; color: White; top: 50%; left: 45%;">
+        Please Reload Page
+<!--        <img src="img/progress.gif">-->
+    </p>
+</div>
+
+<div class="container">
+    <div id="previewImg"></div>
+
+    <div class="PostDiv" style="display: none;">
+        <div style="margin: auto">
+            <div id="finalImag1" style="position: relative; margin: auto;height: 400px;width: 400px;"><img src="img/PostImg.jpg" width="400">
+                <div id="show-img1" style="position: absolute;bottom: 59px;left: 30px;"></div>
+                <div id="usertext1" style="position: absolute;bottom: 88px;left: 106px;font-size: 15.5px;font-family: 'Hind Vadodara',sans-serif;font-weight: bold;color: #bc1e27; width: 100%; text-align: left;white-space: nowrap;overflow: hidden;">
+                </div></div>
+            <div id="finalImage" style="position: relative; margin: auto;display: none;width: 1280px;height: 1280px;"><img src="img/PostImg.jpg" width="1280" height="1280">
+                <div id="show-img" style="position: absolute;bottom: 196px;
+    left: 71px;"></div>
+                <div id="usertext" style="position: absolute;bottom: 281px;left: 341px;font-size: 50px;font-family: 'Hind Vadodara',sans-serif;font-weight: bold;color: #bc1e27; width: 100%; text-align: left;white-space: nowrap;overflow: hidden;" >
+                </div></div>
+            <div style="width: 400px;margin: auto;">
+                <button class="button button-green" type="button" onclick="$('#download-image').hide();$('.uploadDiv').css('opacity',1);$('.uploadDiv').css('height','auto');$('.uploadDiv').css('overflow','');$('.PostDiv').hide()" >Back</button>
+                <button class="button button-blue" type="button" onclick="Download()" id="download-image" style="display: none">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="uploadDiv">
+        <div id="upload-demo"></div>
+        <div style="margin: auto">
+            <div class="from-left" style="width: 300px;
+    margin: auto;" >
+                <form method="post" id="savedata">
+                Photo: <input name="photo" type="file" accept="image/*" id="upload" >
+                <br>
+                <br>
+                Name:&nbsp;&nbsp;
+                <input name="name" class="valid" type="text" placeholder="Enter Name" id="name" onkeyup="if($(this).val().length > 25){$(this).val('')}$('#usertext').html($(this).val());$('#usertext1').html($(this).val());" >
+                    <br>
+<!--                    <br>-->
+<!--                    Mobile:-->
+<!--                    <input name="mobileno" onkeyup="if($(this).val().length > 10){$(this).val('')}" class="valid" type="number" placeholder="Enter Mobile No" id="mobileno" >-->
+                <br>
+                <br>
+                    <input type="submit" id="submit" name="submit" style="display: none">
+                    <center id="uplodbtn" style="margin-right: 27px;">
+
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+<!--    <footer style="margin: auto;display: flex;-->
+<!--    justify-content: center;">-->
+<!--        Powered By&nbsp; <img src="img/footer.png" height="20px" width="90px">-->
+<!--    </footer>-->
+</div>
+<!--<button class="g-recaptcha"-->
+<!--        data-sitekey="6LcGpSYjAAAAAHf0C6mU9xSKuZj0lFGqyy90rxLi"-->
+<!--        data-callback='onSubmit'-->
+<!--        data-action='submit'>Submit</button>-->
+<!--</body>-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/croppie.js"></script>
+<script src="js/html2canvas.min.js"></script>
+
+<!-- GOOGLE CAPTCH -->
+<!--<script src="https://www.google.com/recaptcha/api.js?render=6LcGpSYjAAAAAHf0C6mU9xSKuZj0lFGqyy90rxLi"></script>-->
+<!--- *************** -->
+<script>
+    $('.valid').on('keyup',function (){
+        name = $('#name').val();
+        mobileno = $('#mobileno').val();
+        if(name!=''){
+            $('#upload-result').remove();
+            $('#uplodbtn').html(' <button class="button button-green" type="button" onclick="if($(\'#name\').val().length==0){alert(\'Enter Name!\');return false;}$(\'#download-image\').show();$(\'.PostDiv\').show();$(\'.uploadDiv\').css(\'opacity\',0);$(\'.uploadDiv\').css(\'height\',\'0px\');$(\'.uploadDiv\').css(\'overflow\',\'hidden\');" id="upload-result">Upload Photo</button>');
+        }else{
+            $('#upload-result').remove();
+        }
+    });
+    $uploadCrop = $('#upload-demo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 60,
+            height: 72,
+            type: 'square'
+        },
+        boundary: {
+            width: 250,
+            height: 250
+        }
+    });
+
+    $uploadCrop.croppie('bind', {
+        url: 'img/user.png',
+        points: [0,0,0,0]
+    });
+
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.upload-demo').addClass('ready');
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result
+                }).then(function(){
+                    console.log('jQuery bind complete');
+                });
+
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            alert('Not Found');
+        }
+    }
+
+    function dataURLtoFile(dataurl, filename) {
+
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, {type:mime});
+    }
+
+    function popupResult(result) {
+        var html;
+        if (result.html) {
+            html = result.html;
+        }
+        if (result.src) {
+            html = '<img src="' + result.src + '" />';
+        }
+
+        $('#show-img').html(html);
+        //Usage example:
+        var file = dataURLtoFile(result.src,'image.jpg');
+
+    }
+    function popupResult1(result) {
+        var html;
+        if (result.html) {
+            html = result.html;
+        }
+        if (result.src) {
+            html = '<img src="' + result.src + '" />';
+        }
+        $('#show-img1').html(html);
+        //Usage example:
+        var file = dataURLtoFile(result.src,'image.jpg');
+
+    }
+
+    var imageSize = {
+        width: 232,
+        height: 240,
+        type: 'square'
+    };
+    $('#upload').on('change', function () { readFile(this); });
+    $('body').on('click','#upload-result', function (ev) {
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: imageSize,
+            quality: 1
+        }).then(function (resp) {
+            popupResult({
+                src: resp
+            });
+        });
+
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport',
+            quality: 1
+        }).then(function (resp) {
+            popupResult1({
+                src: resp
+            });
+        });
+    });
+
+    function Download() {
+        $('#finalImage').show();
+        $('#divLoading').show();
+        var filename = $('#usertext').text();
+        html2canvas(document.getElementById("finalImage"), {
+            allowTaint: true, useCORS: true
+        }).then(function (canvas) {
+            var anchorTag = document.createElement("a");
+            document.body.appendChild(anchorTag);
+            // document.getElementById("previewImg").appendChild(canvas);
+            anchorTag.download = filename+".jpg";
+            anchorTag.href = canvas.toDataURL();
+            anchorTag.target = '_blank';
+            anchorTag.click();
+            setTimeout(function (){$('#reloadpage').show();$('#divLoading').hide()},5000);
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LcGpSYjAAAAAHf0C6mU9xSKuZj0lFGqyy90rxLi', {action: 'index'}).then(function(token) {
+                    $('#savedata').append('<input type="hidden" name="token" value="' + token + '">');
+                    $('#savedata').append('<input type="hidden" name="action" value="index">');
+                    $('#submit').trigger('click');
+                });
+            });
+        });
+    }
+</script>
+</html>
